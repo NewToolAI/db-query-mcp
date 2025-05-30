@@ -5,7 +5,6 @@ description = "db-query-mcp is an MCP tool that enables data querying and export
 authors = [{name = "zhangshulin", email = "<zhangslwork@yeah.net>"}]
 license = "Apache-2.0"
 readme = "README.md"
-repository = "https://github.com/NewToolAI/db-query-mcp"
 requires-python = ">=3.10"
 dependencies = [
     "mcp[cli]>=1.9.0",
@@ -15,6 +14,9 @@ dependencies = [
 [[tool.uv.index]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
+
+[project.urls]
+repository = "https://github.com/NewToolAI/db-query-mcp"
 
 [project.scripts]
 db-query-mcp = "db_query_mcp.main:run"
