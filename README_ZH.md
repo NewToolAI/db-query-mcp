@@ -24,6 +24,11 @@ db-query-mcp 是一个多功能数据库查询 MCP 工具，具有以下核心�
 pip install db-query-mcp
 ```
 
+源码安装：
+```bash
+pip install git+https://github.com/NewToolAI/db-query-mcp
+```
+
 mysql需要额外安装依赖:
 ```bash
 pip install pymysql
