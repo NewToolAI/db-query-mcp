@@ -18,6 +18,9 @@ db-query-mcp 是一个多功能数据库查询 MCP 工具，具有以下核心�
 - ​数据导出​：支持查询结果导出功能；
 - 未来版本规划将扩展对 Elasticsearch、MongoDB 以及图数据库的支持，致力于成为全栈式数据库查询解决方案。
 
+## 演示
+https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
+
 ## 安装
 
 ```bash
