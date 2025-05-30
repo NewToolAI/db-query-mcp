@@ -1,3 +1,5 @@
+import re
+import csv
 from typing import Dict
 from pathlib import Path
 
@@ -9,7 +11,7 @@ from sqlalchemy.engine import Engine
 from db_query_mcp.db_adapters.base_adapter import BaseAdapter
 
 
-__all__ = ['SqlalchemyAdapter']
+__all__ = ['RelationalDBAdapter']
 
 
 supported_dbs = [
@@ -25,11 +27,14 @@ supported_dbs = [
 ]
 
 
-class SqlalchemyAdapter(BaseAdapter):
+class RelationalDBAdapter(BaseAdapter):
     
     def __init__(self, db_uri: str):
         self.db_uri = db_uri
+        self._test_uri(self.db_uri)
         self.engine = create_engine(db_uri)
+        self._test_connection(self.engine)
+        self._register_event_listeners(self.engine)
 
     def query(self, sql: str) -> Dict:
         self._check_sql(sql)
@@ -54,7 +59,7 @@ class SqlalchemyAdapter(BaseAdapter):
             if output.is_dir():
                 path = output / 'export.csv'
                 if path.exists():
-                    raise FileExistsError(f'File {output} already exists.')
+                    raise FileExistsError(f'File {path.resolve()} already exists.')
             elif output.exists():
                 raise FileExistsError(f'File {output} already exists.')
             else:
@@ -126,31 +131,48 @@ class SqlalchemyAdapter(BaseAdapter):
         except SQLAlchemyError as e:
             raise SQLAlchemyError(f'Failed to obtain the database schema: {str(e)}')
 
-    @event.listens_for(Engine, "before_execute")
-    def before_execute(conn, clauseelement, multiparams, params):
-        if clauseelement.is_dml:
-            raise Exception("Only support query operations.")
+    def _test_uri(self, db_uri: str):
+        db_type = db_uri.split(':')[0].lower().strip()
+        if db_type not in supported_dbs:
+            raise ValueError(f'Unsupported database type: {db_type}')
+        
+        if db_type == 'sqlite':
+            path = Path(db_uri.split('///')[1].strip())
+            if not path.exists():
+                raise FileNotFoundError(f'Database file {path.resolve()} not found.')
 
-    def _check_sql(self, sql: str) -> bool:
+    def _test_connection(self, engine: Engine):
+        try:
+            with engine.connect() as conn:
+                conn.execute(text('SELECT 1'))
+        except SQLAlchemyError as e:
+            raise SQLAlchemyError(f'Failed to connect to the database: {str(e)}')
+
+    def _register_event_listeners(self, engine: Engine):
+        @event.listens_for(engine, "before_execute")
+        def prevent_write_operations(conn, clauseelement, multiparams, params):
+            if hasattr(clauseelement, 'is_dml') and clauseelement.is_dml:
+                raise Exception("DML operations are not allowed. Only SELECT queries are permitted.")
+            if hasattr(clauseelement, 'is_ddl') and clauseelement.is_ddl:
+                raise Exception("DDL operations are not allowed. Only SELECT queries are permitted.")
+
+    def _check_sql(self, sql: str) -> str:
         sql = sql.strip()
 
-        if 'SELECT ' not in sql.upper():
-            raise ValueError('Only support query operations.') 
+        if not sql.upper().startswith('SELECT'):
+            raise Exception('Only support query operations.') 
 
-        for action in ['INSERT ', 'UPDATE ', 'DELETE ', 'DROP ', 'CREATE ', 'ALTER ']:
-            if action in sql.upper():
-                raise ValueError(f'Only support query operations.')
+        forbidden_pattern = r'\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER)\b'
+        if re.search(forbidden_pattern, sql, re.IGNORECASE):
+            raise Exception(f'Only support query operations.')
 
         return  sql
 
     def _export_to_file(self, output: str, columns: list, data: list):
-        with open(output, 'w', encoding='utf-8') as f:
-            columns = ', '.join(columns)
-            f.write(f'{columns}\n')
-
-            for row in data:
-                row = ', '.join([f'"{value}"' if "'" in str(value) else str(value) for value in row])
-                f.write(f'{row}\n')
+        with open(output, 'w', encoding='utf-8', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(columns)
+            writer.writerows(data)
 
     def _format_schema_to_markdown(self, schema: Dict[str, Dict]) -> str:
         markdown_output = []

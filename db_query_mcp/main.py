@@ -22,7 +22,6 @@ def query_database(query: str, sql: str) -> str:
         query: The query user input.
         sql: The SQL query to execute.
     '''
-
     result = db.query(sql)
     return result 
 
