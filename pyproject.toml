@@ -1,8 +1,11 @@
 [project]
 name = "db-query-mcp"
-version = "0.0.1"
-description = "Add your description here"
+version = "0.0.2"
+description = "db-query-mcp is an MCP tool that supports querying and exporting data from multiple databases. "
+authors = ["zhangshulin <zhangslwork@yeah.net>"]
+license = "Apache-2.0"
 readme = "README.md"
+repository = "https://github.com/NewToolAI/db-query-mcp"
 requires-python = ">=3.10"
 dependencies = [
     "mcp[cli]>=1.9.0",
@@ -15,6 +18,4 @@ default = true
 
 [project.scripts]
 db-query-mcp = "db_query_mcp.main:run"
-
-[tool.setuptools]
-packages = ["db_query_mcp"]
+db_query_mcp = "db_query_mcp.main:run"
