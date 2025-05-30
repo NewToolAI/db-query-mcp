@@ -1,4 +1,4 @@
-![image](assets/logo.png)
+![image](logo.png)
 
 ![Python Version](https://img.shields.io/badge/python-3.10+-aff.svg)
 ![License](https://img.shields.io/badge/license-Apache%202-dfd.svg)
