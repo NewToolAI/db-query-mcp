@@ -91,7 +91,8 @@ class SqlalchemyAdapter(BaseAdapter):
                         'name': column['name'],
                         'type': column['type'],
                         'nullable': column['nullable'],
-                        'default': column['default']
+                        'default': column['default'],
+                        'comment': column.get('comment', '')
                     })
             
                 pk_info = inspector.get_pk_constraint(table_name)
@@ -105,8 +106,20 @@ class SqlalchemyAdapter(BaseAdapter):
                             'referred_columns': fk['referred_columns']
                         })
             
+                # Add table comment if available
+                try:
+                    table_comment = inspector.get_table_comment(table_name)
+                    if table_comment and table_comment.get('text'):
+                        table_info['comment'] = table_comment['text']
+                    else:
+                        table_info['comment'] = ''
+                except (NotImplementedError, AttributeError):
+                    # Some databases don't support table comments
+                    table_info['comment'] = ''
+            
                 schema[table_name] = table_info
-                schema = self._format_schema_to_markdown(schema)
+            
+            schema = self._format_schema_to_markdown(schema)
 
             return schema
         
@@ -146,12 +159,16 @@ class SqlalchemyAdapter(BaseAdapter):
         for table_name, table_info in schema.items():
             # Table header
             markdown_output.append(f'### Table name: `{table_name}`\n')
+            
+            # Table comment if available
+            if table_info.get('comment'):
+                markdown_output.append(f'**Table Description:** {table_info["comment"]}\n')
         
             # Columns table
             if table_info.get('columns'):
                 markdown_output.append('### Table columns\n')
-                markdown_output.append('| Column Name | Data Type | Nullable | Default Value | Primary Key |')
-                markdown_output.append('|---|---|---|---|---|')
+                markdown_output.append('| Column Name | Data Type | Nullable | Default Value | Primary Key | Comment |')
+                markdown_output.append('|---|---|---|---|---|---|')
             
                 primary_keys = table_info.get('primary_key', [])
             
@@ -161,8 +178,9 @@ class SqlalchemyAdapter(BaseAdapter):
                     nullable = '✓' if column['nullable'] else '✗'
                     default = str(column['default']) if column['default'] is not None else '-'
                     is_pk = '✓' if name in primary_keys else '✗'
+                    comment = column.get('comment', '') or '-'
                 
-                    markdown_output.append(f'| {name} | {data_type} | {nullable} | {default} | {is_pk} |')
+                    markdown_output.append(f'| {name} | {data_type} | {nullable} | {default} | {is_pk} | {comment} |')
             
                 markdown_output.append('')
         
