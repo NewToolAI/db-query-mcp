@@ -10,7 +10,7 @@
 # db-query-mcp
 
 ## 简介
-db-query-mcp 是一个多功能数据库查询 MCP 工具，具有以下核心特性：
+db-query-mcp 是一个支持多种数据库查询和导出的 MCP 工具，具有以下核心特性：
 
 - ​多数据库支持​：全面兼容主流关系型数据库（MySQL、PostgreSQL、Oracle、SQLite等）；
 - 安全访问​：默认以只读模式连接数据库，保障数据安全；

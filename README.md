@@ -10,7 +10,7 @@
 # db-query-mcp
 
 ## Introduction
-db-query-mcp is a versatile Database Query MCP tool with the following core features:
+db-query-mcp is an MCP tool that enables data querying and export operations across diverse databases, featuring:​
 
 - **Multi-Database Support**: Full compatibility with mainstream relational databases (MySQL, PostgreSQL, Oracle, SQLite, etc.)
 - **Secure Access**: Default read-only mode connection ensures data safety

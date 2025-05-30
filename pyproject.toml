@@ -1,7 +1,7 @@
 [project]
 name = "db-query-mcp"
 version = "0.0.2"
-description = "db-query-mcp is an MCP tool that supports querying and exporting data from multiple databases. "
+description = "db-query-mcp is an MCP tool that enables data querying and export operations across diverse databases. "
 authors = ["zhangshulin <zhangslwork@yeah.net>"]
 license = "Apache-2.0"
 readme = "README.md"
