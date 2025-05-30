@@ -1,0 +1,20 @@
+[project]
+name = "db-query-mcp"
+version = "0.0.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.9.0",
+    "sqlalchemy>=2.0.0",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+[project.scripts]
+db-query-mcp = "db_query_mcp.main:run"
+
+[tool.setuptools]
+packages = ["db_query_mcp"]
