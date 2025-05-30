@@ -1,6 +1,6 @@
 [project]
 name = "db-query-mcp"
-version = "0.0.2"
+version = "0.0.3"
 description = "db-query-mcp is an MCP tool that enables data querying and export operations across diverse databases. "
 authors = [{name = "zhangshulin", email = "zhangslwork@yeah.net"}]
 license = "Apache-2.0"
