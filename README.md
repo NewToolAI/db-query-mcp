@@ -5,18 +5,18 @@
 [![PyPI](https://img.shields.io/pypi/v/db-query-mcp)](https://pypi.org/project/db-query-mcp/)
 [![GitHub pull request](https://img.shields.io/badge/PRs-welcome-blue)](https://github.com/Shulin-Zhang/db-query-mcp/pulls)
 
-\[ [中文](README_ZH.md) | English \]
+[ English | [中文](README_ZH.md) ]
 
 # db-query-mcp
 
 ## Introduction
-db-query-mcp is an MCP tool that enables data querying and export operations across diverse databases, featuring:​
+db-query-mcp is a mcp tool supporting diverse database querying and exporting, featuring:
 
-- **Multi-Database Support**: Full compatibility with mainstream relational databases (MySQL, PostgreSQL, Oracle, SQLite, etc.)
-- **Secure Access**: Default read-only mode connection ensures data safety
-- **Smart Query**: Provides efficient SQL generation and execution capabilities
-- **Data Export**: Supports query result export functionality
-- Future versions will expand support for Elasticsearch, MongoDB, and graph databases, aiming to become a full-stack database query solution.
+- **Multi-DB Support**: Full compatibility with mainstream databases (ElasticSearch, MySQL, PostgreSQL, Oracle, SQLite, etc.)
+- **Secure Access**: Default read-only mode for data protection
+- **Smart Query**: Natural language to SQL conversion with query optimization
+- **Data Export**: CSV / Json export capabilities
+- **Roadmap**: Expanding support for MongoDB and GraphDatabase to become full-stack DB query MCP
 
 ## Demo
 https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
@@ -25,6 +25,11 @@ https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
 
 ```bash
 pip install db-query-mcp
+```
+
+ElasticSearch:
+```bash
+pip install db-query-mcp[elasticsearch]
 ```
 
 Install from GitHub:
@@ -53,15 +58,25 @@ pip install psycopg2-binary
 | **SQL Server** | `pyodbc` or `pymssql` | `mssql+pyodbc://user:password@hostname/dbname` |
 
 ## Configuration
-
 ```json
 {
   "mcpServers": {
-    "db_query_mcp": {
+    "sqlite_db_mcp": {
       "command": "db-query-mcp",
       "args": [
         "--db",
-        "mysql+pymysql://user:password@host:port/database"
+        "sqlite",
+        "--uri",
+        "sqlite:///sqlite_company.db",
+      ]
+    },
+    "es_db_mcp": {
+      "command": "db-query-mcp",
+      "args": [
+        "--db",
+        "elasticsearch",
+        "--uri",
+        "https://user:password@localhost:9200?index=test_data_index&ca_certs=/home/user/http_ca.crt",
       ]
     }
   }
