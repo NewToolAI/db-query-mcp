@@ -5,7 +5,12 @@ query_prompt = '''Generate a single SQL query to retrieve the required informati
 
 ## Database type: {db_type}
 
+## Database schema:
 {db_schema}
+
+Args:
+    query (str): The query user input
+    statement (str): The {db_type} SQL to execute
 '''
 
 export_prompt = '''Generate a single SQL query to retrieve the required information from the database and export it as a CSV file. 
@@ -16,5 +21,10 @@ export_prompt = '''Generate a single SQL query to retrieve the required informat
 
 ## Database type: {db_type}
 
+## Database schema:
 {db_schema}
+
+Args:
+    query (str): The query user input
+    statement (str): The {db_type} SQL to execute
 '''

@@ -29,10 +29,10 @@ supported_dbs = [
 
 class RelationalDBAdapter(BaseAdapter):
     
-    def __init__(self, db_uri: str):
+    def __init__(self, db_uri: str, **kwargs):
         self.db_uri = db_uri
         self._test_uri(self.db_uri)
-        self.engine = create_engine(db_uri)
+        self.engine = create_engine(db_uri, **kwargs)
         self._test_connection(self.engine)
         self._register_event_listeners(self.engine)
 
@@ -176,7 +176,6 @@ class RelationalDBAdapter(BaseAdapter):
 
     def _format_schema_to_markdown(self, schema: Dict[str, Dict]) -> str:
         markdown_output = []
-        markdown_output.append('## Database Schema\n')
     
         for table_name, table_info in schema.items():
             # Table header

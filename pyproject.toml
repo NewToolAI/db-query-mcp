@@ -1,6 +1,6 @@
 [project]
 name = "db-query-mcp"
-version = "0.0.4"
+version = "0.0.5"
 description = "db-query-mcp is an MCP tool that enables data querying and export operations across diverse databases. "
 authors = [{name = "zhangshulin", email = "zhangslwork@yeah.net"}]
 license = "Apache-2.0"
@@ -17,3 +17,12 @@ repository = "https://github.com/NewToolAI/db-query-mcp"
 [project.scripts]
 db-query-mcp = "db_query_mcp.main:run"
 db_query_mcp = "db_query_mcp.main:run"
+
+[dependency-groups]
+elasticsearch = [
+    "elasticsearch>=8.0.0",
+]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
