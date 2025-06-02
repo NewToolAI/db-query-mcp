@@ -19,7 +19,7 @@ db-query-mcp 是一个支持多种数据库查询和导出的 MCP 工具，具�
 - 未来版本规划将扩展对 MongoDB 以及 GraphDatabase 的支持，致力于成为全栈式数据库查询 MCP。
 
 ## 演示
-https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
+https://github.com/user-attachments/assets/60771cda-8b52-41bd-90e3-523c836f6366
 
 ## 更新日志
 
