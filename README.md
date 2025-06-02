@@ -21,6 +21,10 @@ db-query-mcp is a mcp tool supporting diverse database querying and exporting, f
 ## Demo
 https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
 
+## Changelog
+
+- 2025-06-02: Added support for ElasticSearch database queries
+
 ## Installation
 
 ```bash
