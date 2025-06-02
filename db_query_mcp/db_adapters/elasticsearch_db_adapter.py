@@ -21,7 +21,6 @@ class ElasticsearchDBAdapter(BaseAdapter):
         self._test_connection()
 
     def query(self, query: dict) -> str:
-        '''根据es生成的查询语句查询es，返回json字符串'''
         response = self.es.search(index=self.index, body=query)
 
         response_dict = response.to_dict() if hasattr(response, 'to_dict') else dict(response)
@@ -42,33 +41,30 @@ class ElasticsearchDBAdapter(BaseAdapter):
         return json.dumps(schema_info, indent=2, ensure_ascii=False)
 
     def export(self, query: dict, output: str) -> str:
-        '''导出es的查询结果到json文件'''
         response = self.es.search(index=self.index, body=query)
 
         output_path = Path(output)
         if output_path.is_dir():
             export_file = output_path / 'export.json'
             if export_file.exists():
-                raise FileExistsError(f'文件 {export_file.resolve()} 已存在。')
+                raise FileExistsError(f'File {export_file.resolve()} already exists.')
         elif output_path.exists():
-            raise FileExistsError(f'文件 {output_path} 已存在。')
+            raise FileExistsError(f'File {output_path} already exists.')
         else:
             export_file = output_path
             
         self._export_to_json(export_file, response)
             
-        return f'成功导出数据到 {export_file.resolve()}'
+        return f'Successfully exported data to {export_file.resolve()}'
     
     def _test_connection(self):
-        '''测试Elasticsearch连接'''
         if not self.es.ping():
-            raise Exception('无法连接到Elasticsearch')
+            raise Exception('Cannot connect to Elasticsearch.')
             
         if not self.es.indices.exists(index=self.index):
-            raise Exception(f'索引 {self.index} 不存在')
+            raise Exception(f'Index {self.index} does not exist.')
     
     def _export_to_json(self, output_path: Path, response: Dict[str, Any]):
-        # 确保响应是可序列化的字典
         response_dict = response.to_dict() if hasattr(response, 'to_dict') else dict(response)
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(response_dict, f, indent=2, ensure_ascii=False)
