@@ -19,7 +19,7 @@ db-query-mcp is a mcp tool supporting diverse database querying and exporting, f
 - **Roadmap**: Expanding support for MongoDB and GraphDatabase to become full-stack DB query MCP
 
 ## Demo
-https://github.com/user-attachments/assets/51d0e890-27b2-411d-b5c3-e748599a9543
+https://github.com/user-attachments/assets/60771cda-8b52-41bd-90e3-523c836f6366
 
 ## Changelog
 
