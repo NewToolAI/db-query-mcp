@@ -21,6 +21,9 @@ class ElasticsearchDBAdapter(BaseAdapter):
         self._test_connection()
 
     def query(self, query: dict) -> str:
+        if isinstance(query, str):
+            query = json.loads(query)
+            
         response = self.es.search(index=self.index, body=query)
 
         response_dict = response.to_dict() if hasattr(response, 'to_dict') else dict(response)
@@ -31,9 +34,6 @@ class ElasticsearchDBAdapter(BaseAdapter):
     
     def get_db_schema(self) -> str:
         mapping = self.es.indices.get_mapping(index=self.index)
-        settings = self.es.indices.get_settings(index=self.index)
-        stats = self.es.indices.stats(index=self.index)
-        
         schema_info = {
             'mapping': mapping.to_dict() if hasattr(mapping, 'to_dict') else dict(mapping),
         }

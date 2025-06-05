@@ -62,27 +62,37 @@ pip install psycopg2-binary
 | **SQL Server** | `pyodbc` or `pymssql` | `mssql+pyodbc://user:password@hostname/dbname` |
 
 ## Configuration
+
+**For some clients, only one db-query-mcp server can be enabled at a time.**
+
 ```json
 {
   "mcpServers": {
-    "sqlite_db_mcp": {
-      "command": "db-query-mcp",
-      "args": [
-        "--db",
-        "sqlite",
-        "--uri",
-        "sqlite:///sqlite_company.db",
-      ]
-    },
-    "es_db_mcp": {
-      "command": "db-query-mcp",
-      "args": [
-        "--db",
-        "elasticsearch",
-        "--uri",
-        "https://user:password@localhost:9200?index=test_data_index&ca_certs=/home/user/http_ca.crt",
-      ]
-    }
+      "sqlite_db_mcp": {
+        "command": "db-query-mcp",
+        "args": [
+          "--db",
+          "sqlite",
+          "--uri", 
+          "sqlite:///sqlite_company.db"
+        ]
+      }
+  }
+}
+```
+
+```json
+{
+  "mcpServers": {
+      "es_db_mcp": {
+        "command": "db-query-mcp",
+        "args": [
+          "--db",
+          "elasticsearch",
+          "--uri", 
+          "https://user:password@localhost:9200?index=test_data_index&ca_certs=/home/user/http_ca.crt"
+        ]
+      }
   }
 }
 ```

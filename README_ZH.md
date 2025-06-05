@@ -34,7 +34,7 @@ pip install db-query-mcp
 
 ElasticSearch:
 ```bash
-pip install db-query-mcp[elasticsearch]
+pip install "db-query-mcp[elasticsearch]"
 ```
 
 源码安装：
@@ -64,6 +64,8 @@ pip install psycopg2-binary
 
 ## 配置
 
+**对于某些客户端，每次只能开启一个db-query-mcp server**
+
 ```json
 {
   "mcpServers": {
@@ -75,7 +77,14 @@ pip install psycopg2-binary
           "--uri", 
           "sqlite:///sqlite_company.db"
         ]
-      },
+      }
+  }
+}
+```
+
+```json
+{
+  "mcpServers": {
       "es_db_mcp": {
         "command": "db-query-mcp",
         "args": [

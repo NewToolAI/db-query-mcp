@@ -14,7 +14,8 @@ args = parser.parse_args()
 db = factory.create_db(args.db, args.uri)
 query_prompt, export_prompt = factory.create_sql_prompt(db.get_db_type(), db.get_db_schema())
 
-mcp = FastMCP('db_query_mcp')
+insturction = f'You are a {db.get_db_type()} database query or export master.'
+mcp = FastMCP('db_query_mcp', instructions=insturction)
 
 
 @mcp.tool(description=query_prompt)
