@@ -33,7 +33,7 @@ pip install db-query-mcp
 
 ElasticSearch:
 ```bash
-pip install db-query-mcp[elasticsearch]
+pip install "db-query-mcp[elasticsearch]"
 ```
 
 Install from GitHub:
