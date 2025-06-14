@@ -9,8 +9,10 @@ query_prompt = '''Generate a single SQL query to retrieve the required informati
 {db_schema}
 
 Args:
-    query (str): The query user input
-    statement (str): The {db_type} SQL to execute
+
+query (str): The query user input
+
+statement (str): The SQL to query the {db_type} database
 '''
 
 export_prompt = '''Generate a single SQL query to retrieve the required information from the database and export it as a CSV file. 
@@ -25,6 +27,8 @@ export_prompt = '''Generate a single SQL query to retrieve the required informat
 {db_schema}
 
 Args:
-    query (str): The query user input
-    statement (str): The {db_type} SQL to execute
+
+query (str): The query user input
+
+statement (str): The SQL to query the {db_type} database
 '''

@@ -14,6 +14,8 @@ relational_dbs = [
 ]
 
 
+__all__ = ['create_db', 'create_sql_prompt']
+
 
 def create_db(db: str, uri: str) -> BaseAdapter:
     db_uri, args = parse_uri(uri)

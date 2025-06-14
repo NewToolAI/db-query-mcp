@@ -11,8 +11,10 @@ query_prompt = '''Generate a single Elasticsearch DSL query to retrieve the requ
 {db_schema}
 
 Args:
-    query (str): The query user input
-    statement (dict): The Elasticsearch DSL query to execute
+
+query (str): The query user input
+
+statement (dict): The Elasticsearch DSL query to execute
 '''
 
 export_prompt = '''Generate a single Elasticsearch DSL query to retrieve the required information from the Elasticsearch index and export it as a JSON file.
@@ -29,6 +31,8 @@ export_prompt = '''Generate a single Elasticsearch DSL query to retrieve the req
 {db_schema}
 
 Args:
-    query (str): The query user input
-    statement (dict): The Elasticsearch DSL query to execute
+
+query (str): The query user input
+
+statement (dict): The Elasticsearch DSL query to execute
 '''

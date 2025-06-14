@@ -1,4 +1,3 @@
-from typing import Union
 from argparse import ArgumentParser
 from mcp.server.fastmcp import FastMCP
 
@@ -19,7 +18,7 @@ mcp = FastMCP('db_query_mcp', instructions=insturction)
 
 
 @mcp.tool(description=query_prompt)
-def query_database(query: str, statement: Union[str, dict]) -> str:
+def query_database(query: str, statement: str | dict) -> str:
     f'''Query the database
     Args:
         query: The query user input.
@@ -30,7 +29,7 @@ def query_database(query: str, statement: Union[str, dict]) -> str:
 
 
 @mcp.tool(description=export_prompt)
-def export_database(query: str, statement: Union[str, dict], path: str) -> str:
+def export_database(query: str, statement: str | dict, path: str) -> str:
     f'''Query the database and export the data to a csv file
     Args:
         query: The query user input.
